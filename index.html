@@ -17,16 +17,22 @@
       justify-content: flex-start;
       color: white;
 
-      /* 🔽 ضع هنا مسار الصورة الخاصة بك بدلاً من الرابط */
+      /* Desktop / default background */
       background: url("background.jpg") no-repeat center center;
-
-@media
- (max-width: 600px) {
-
-      background: url("background1.jpg") no-repeat center center;
-
-}
       background-size: cover;
+    }
+
+    /* Mobile: use a different background image for small screens */
+    @media (max-width: 767px) {
+      body {
+        background-image: url("background1.jpg");
+        /* Use cover but slightly adjust position for phones */
+        background-position: center top;
+        background-size: cover;
+      }
+      .question-box {
+        margin-top: 12vh;
+      }
     }
 
     .question-box {
@@ -121,6 +127,5 @@
   </script>
 </body>
 </html>
-
 
 
