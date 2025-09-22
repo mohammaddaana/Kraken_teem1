@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>KRAKEN TEAM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      direction: rtl;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      color: white;
+      background: url(https://cdn.discordapp.com/attachments/1360233138009149702/1416105179513884788/ChatGPT_Image_7_2025_08_33_04_.png?ex=68d0d6f8&is=68cf8578&hm=70bc1319bdbff197a2995a3e97675e1d537972a8bf1c527a955e094db14a3ab8&) no-repeat center center;
+      background-size: cover;
+    }
+
+    .question-box {
+      margin-top: 10vh;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-sizing: border-box;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      background-color: #00bcd4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      background-color: #0097a7;
+    }
+
+    @media (min-width: 768px) {
+      .question-box {
+        margin-top: 80px;
+        padding: 25px;
+        max-width: 500px;
+      }
+
+      input, button {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="question-box">
+    <input type="text" id="questionInput" placeholder="اكتب سؤالك هنا">
+    <br>
+    <button onclick="sendQuestion()">إرسال</button>
+  </div>
+
+  <script>
+    function sendQuestion() {
+      const question = document.getElementById("questionInput").value.trim();
+      if (!question) {
+        alert("❗ الرجاء كتابة سؤال قبل الإرسال.");
+        return;
+      }
+
+      const botToken = "8399768192:AAEeXfMStwy5rTz2huTyy_ihGIQiIc3Y1lM";
+      const chatId = "7031057922";
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: question
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          alert("✅ تم إرسال سؤالك!");
+        } else {
+          alert("❌ خطأ: " + data.description);
+        }
+      })
+      .catch(error => {
+        alert("❌ حدث خطأ: " + error.message);
+      });
+    }
+  </script>
+</body>
+</html>
