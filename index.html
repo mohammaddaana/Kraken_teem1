@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>KRAKEN TEAM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
@@ -17,22 +19,9 @@
       justify-content: flex-start;
       color: white;
 
-      /* Desktop / default background */
       background: url("background.jpg") no-repeat center center;
+      /* مثال: url("images/myphoto.png") إذا كانت داخل مجلد اسمه images */
       background-size: cover;
-    }
-
-    /* Mobile: use a different background image for small screens */
-    @media (max-width: 767px) {
-      body {
-        background-image: url("background1.jpg");
-        /* Use cover but slightly adjust position for phones */
-        background-position: center top;
-        background-size: cover;
-      }
-      .question-box {
-        margin-top: 12vh;
-      }
     }
 
     .question-box {
@@ -86,10 +75,17 @@
   </style>
 </head>
 <body>
+<p >مرحبا  لقد تم تحديث الصفحه بسبب عدد الاسئله</p>
+
+
   <div class="question-box">
     <input type="text" id="questionInput" placeholder="اكتب سؤالك هنا">
     <br>
+   
     <button onclick="sendQuestion()">إرسال</button>
+     <div class="social-icons">
+        <a href="https://t.me/Mbookd" > ادب وروايات <i class="fab fa-telegram"></i></a>
+      </div>
   </div>
 
   <script>
@@ -127,5 +123,3 @@
   </script>
 </body>
 </html>
-
-
