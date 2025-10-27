@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
   <meta charset="UTF-8">
-  <title>KRAKEN TEAM</title>
+  <title>تواصل مع فريق Kraken</title>
+  <link rel="icon" type="image/png" href="main/back5.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
   <style>
+    /* 🌊 خلفية أمواج متحركة */
     body {
       margin: 0;
       padding: 0;
@@ -16,86 +21,133 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       color: white;
-
-      background: url("background.jpg") no-repeat center center;
-      /* مثال: url("images/myphoto.png") إذا كانت داخل مجلد اسمه images */
-      background-size: cover;
+      text-align: center;
+      background: linear-gradient(270deg, #001f3f, #003366, #001f3f);
+      background-size: 600% 600%;
+      animation: wave 15s ease infinite;
     }
 
+    @keyframes wave {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* 📦 صندوق السؤال */
     .question-box {
-      margin-top: 10vh;
       background-color: rgba(0, 0, 0, 0.5);
-      padding: 20px;
-      border-radius: 10px;
+      padding: 25px;
+      border-radius: 15px;
       width: 90%;
       max-width: 400px;
       box-sizing: border-box;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
     }
 
-    input {
+    /* 📝 الحقول */
+    input,
+    textarea {
+      text-align: right;
       padding: 10px;
       font-size: 16px;
       width: 100%;
-      border-radius: 5px;
+      border-radius: 8px;
       border: none;
+      margin-bottom: 12px;
       box-sizing: border-box;
+     
+      outline: none;
     }
 
+    /* 🔢 حقل الرقم من اليسار لليمين */
+    #phoneInput {
+      direction: ltr;
+      text-align: right;
+
+    }
+
+    /* 🔘 الزر */
     button {
-      margin-top: 10px;
       padding: 10px;
-      font-size: 16px;
+      font-size: 18px;
       width: 100%;
-      background-color: #00bcd4;
+      background: linear-gradient(90deg, #3a6cf4, #0097a7);
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      box-sizing: border-box;
+      transition: 0.3s;
+      font-weight: bold;
     }
 
     button:hover {
-      background-color: #0097a7;
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #0097a7, #3a6cf4);
     }
 
+    /* 📱 استجابة */
     @media (min-width: 768px) {
       .question-box {
-        margin-top: 80px;
-        padding: 25px;
-        max-width: 500px;
+        max-width: 450px;
       }
 
       input,
+      textarea,
       button {
         font-size: 18px;
       }
     }
+
+    /* 💬 العنوان */
+    h1 {
+      margin-bottom: 20px;
+      color: #fff;
+      font-size: 28px;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+    }
   </style>
 </head>
-<body>
 
+<body>
+  <h1>💬 تواصل معنا 💬</h1>
 
   <div class="question-box">
-    <input type="text" id="questionInput" placeholder="اكتب سؤالك هنا">
-    <br>
-   
+    <input type="text" id="nameInput" placeholder="الاسم الكامل">
+    <input type="text" id="phoneInput" placeholder="07 **********">
+    <textarea id="questionInput" rows="4" placeholder="اكتب سؤالك هنا..."></textarea>
     <button onclick="sendQuestion()">إرسال</button>
-     <div class="social-icons">
-      </div>
   </div>
 
   <script>
     function sendQuestion() {
+      const name = document.getElementById("nameInput").value.trim();
+      const phone = document.getElementById("phoneInput").value.trim();
       const question = document.getElementById("questionInput").value.trim();
-      if (!question) {
-        alert("❗ الرجاء كتابة سؤال قبل الإرسال.");
+
+      if (!name || !phone || !question) {
+        alert("❗ يرجى تعبئة جميع الحقول قبل الإرسال.");
         return;
       }
 
-      const botToken = "8399768192:AAEeXfMStwy5rTz2huTyy_ihGIQiIc3Y1lM";
-      const chatId = "7031057922";
+      if (!/^\d{10}$/.test(phone)) {
+        alert("❗ رقم الهاتف يجب أن يحتوي على 10 أرقام.");
+        return;
+      }
+
+      const message = `👤 الاسم: ${name}\n📞 الهاتف: ${phone}\n💬 السؤال: ${question}`;
+
+      const botToken = "8200060967:AAFCayXcvY4F60fB16JNEZuiHMsNc0lsLGE";
+      const chatId = "-1003231505570";
       const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
       fetch(url, {
@@ -103,22 +155,25 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: chatId,
-          text: question
+          text: message
         })
       })
         .then(res => res.json())
         .then(data => {
           if (data.ok) {
-            alert("✅ تم إرسال سؤالك!");
+            alert("✅ تم إرسال رسالتك بنجاح!");
+            document.getElementById("nameInput").value = "";
+            document.getElementById("phoneInput").value = "";
+            document.getElementById("questionInput").value = "";
           } else {
-            alert("❌ خطأ: " + data.description);
+            alert("❌ خطأ أثناء الإرسال: " + data.description);
           }
         })
         .catch(error => {
-          alert("❌ حدث خطأ: " + error.message);
+          alert("❌ حدث خطأ أثناء الإرسال: " + error.message);
         });
     }
   </script>
 </body>
-</html>
 
+</html>
